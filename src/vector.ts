@@ -5,7 +5,9 @@ export class Vector {
   private _magnitude: number | undefined;
 
   static clone(v: Vector) {
-    const clone = new Vector(v._x as number, v._y as number);
+    const clone = new Vector(0, 0);
+    clone._x = v._x;
+    clone._y = v._y;
     clone._angle = v._angle;
     clone._magnitude = v._magnitude;
     return clone;
@@ -94,6 +96,14 @@ export class Vector {
 
   public dot(v: Vector) {
     return Vector.dot(this, v);
+  }
+
+  public normalize() {
+    if (this.magnitude > 0) {
+      this.divS(this.magnitude);
+    }
+
+    return this;
   }
 
   public get x() {
