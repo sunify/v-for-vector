@@ -1,29 +1,26 @@
-type CartesianParams = {
-  x: number;
-  y: number;
-};
-
-type PolarParams = {
-  angle: number;
-  magnitude: number;
-};
-
 export class Vector {
   private _x: number | undefined;
   private _y: number | undefined;
   private _angle: number | undefined;
   private _magnitude: number | undefined;
 
+  static clone(v: Vector) {
+    const clone = new Vector(v._x as number, v._y as number);
+    clone._angle = v._angle;
+    clone._magnitude = v._magnitude;
+    return clone;
+  }
+
   static cartesian(x: number, y: number) {
-    return new Vector({ x, y });
+    return new Vector(x, y);
   }
 
   static polar(angle: number, magnitude: number) {
-    return new Vector({ angle, magnitude });
+    return new Vector(angle, magnitude, true);
   }
 
   static magnitude(v: Vector) {
-    return Math.hypot(v.y, v.x);
+    return Vector.dist(v, origin);
   }
 
   static angle(v: Vector) {
@@ -31,7 +28,7 @@ export class Vector {
   }
 
   static dist(v1: Vector, v2: Vector) {
-    return Math.hypot(v1.x + v2.x, v1.y + v2.y);
+    return Math.hypot(v1.x - v2.x, v1.y - v2.y);
   }
 
   static x(angle: number, magnitude: number) {
@@ -40,6 +37,63 @@ export class Vector {
 
   static y(angle: number, magnitude: number) {
     return magnitude * Math.sin(angle);
+  }
+
+  static dot(v1: Vector, v2: Vector) {
+    return v1.x * v1.y + v2.x * v2.y;
+  }
+
+  public add(v: Vector) {
+    this.x += v.x;
+    this.y += v.y;
+    return this;
+  }
+
+  public addS(n: number) {
+    this.x += n;
+    this.y += n;
+    return this;
+  }
+
+  public mult(v: Vector) {
+    this.x *= v.x;
+    this.y *= v.y;
+    return this;
+  }
+
+  public multS(n: number) {
+    this.x *= n;
+    this.y *= n;
+
+    return this;
+  }
+
+  public sub(v: Vector) {
+    return this.add(Vector.clone(v).multS(-1));
+  }
+
+  public subS(n: number) {
+    return this.addS(-n);
+  }
+
+  public div(v: Vector) {
+    this.x /= v.x;
+    this.y /= v.y;
+    return this;
+  }
+
+  public divS(n: number) {
+    this.x /= n;
+    this.y /= n;
+    return this;
+  }
+
+  public clone(v: Vector) {
+    return Vector.clone(v);
+  }
+
+  public dot(v: Vector) {
+    return Vector.dot(this, v);
   }
 
   public get x() {
@@ -55,8 +109,7 @@ export class Vector {
 
   public set x(x: number) {
     this._x = x;
-    this._angle = undefined;
-    this._magnitude = undefined;
+    this.resetPolar();
   }
 
   public get y() {
@@ -72,8 +125,7 @@ export class Vector {
 
   public set y(y: number) {
     this._y = y;
-    this._angle = undefined;
-    this._magnitude = undefined;
+    this.resetPolar();
   }
 
   public get angle() {
@@ -85,8 +137,7 @@ export class Vector {
 
   public set angle(angle: number) {
     this._angle = angle;
-    this._x = undefined;
-    this._y = undefined;
+    this.resetCartesian();
   }
 
   public get magnitude() {
@@ -98,17 +149,28 @@ export class Vector {
 
   public set magnitude(magnitude: number) {
     this._magnitude = magnitude;
+    this.resetCartesian();
+  }
+
+  private resetCartesian() {
     this._x = undefined;
     this._y = undefined;
   }
 
-  private constructor(params: CartesianParams | PolarParams) {
-    if ((params as PolarParams).angle !== undefined) {
-      this._angle = (params as PolarParams).angle;
-      this._magnitude = (params as PolarParams).magnitude;
+  private resetPolar() {
+    this._angle = undefined;
+    this._magnitude = undefined;
+  }
+
+  constructor(xOrAngle: number, yOrMagnitude: number, polar?: boolean) {
+    if (polar) {
+      this._angle = xOrAngle;
+      this._magnitude = yOrMagnitude;
     } else {
-      this._x = (params as CartesianParams).x;
-      this._y = (params as CartesianParams).y;
+      this._x = xOrAngle;
+      this._y = yOrMagnitude;
     }
   }
 }
+
+const origin = new Vector(0, 0);
