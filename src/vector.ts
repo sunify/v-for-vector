@@ -41,6 +41,10 @@ export class Vector {
     return v1.x * v1.y + v2.x * v2.y;
   }
 
+  static zero() {
+    return Vector.cartesian(0, 0);
+  }
+
   public add(v: Vector) {
     this.x = this.x + v.x;
     this.y = this.y + v.y;
@@ -113,16 +117,33 @@ export class Vector {
     return this._x;
   }
 
-  public set x(x: number) {
+  public setX(x: number) {
     this._x = x;
+    return this;
+  }
+
+  public set x(x: number) {
+    this.setX(x);
   }
 
   public get y() {
     return this._y;
   }
 
-  public set y(y: number) {
+  public setY(y: number) {
     this._y = y;
+    return this;
+  }
+
+  public set y(y: number) {
+    this.setY(y);
+  }
+
+  public setCartesian(x: number, y: number) {
+    this.setX(x);
+    this.setY(y);
+
+    return this;
   }
 
   public get angle() {
@@ -155,6 +176,13 @@ export class Vector {
 
   public set magnitude(magnitude: number) {
     this.setMagnitude(magnitude);
+  }
+
+  public setPolar(angle: number, magnitude: number) {
+    this._x = Vector.x(angle, magnitude);
+    this._y = Vector.y(angle, magnitude);
+
+    return this;
   }
 
   constructor(xOrAngle: number, yOrMagnitude: number, polar?: boolean) {
