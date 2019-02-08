@@ -94,6 +94,15 @@ export class Vector {
     return Vector.clone(v);
   }
 
+  public copyFrom(v: Vector) {
+    this._x = v._x;
+    this._y = v._y;
+    this._angle = v._angle;
+    this._magnitude = v._magnitude;
+
+    return this;
+  }
+
   public dot(v: Vector) {
     return Vector.dot(this, v);
   }
