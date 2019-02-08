@@ -129,20 +129,32 @@ export class Vector {
     return Vector.angle(this);
   }
 
-  public set angle(angle: number) {
+  public setAngle(angle: number) {
     const magnitude = this.magnitude;
     this._x = Vector.x(angle, magnitude);
     this._y = Vector.y(angle, magnitude);
+
+    return this;
+  }
+
+  public set angle(angle: number) {
+    this.setAngle(angle);
   }
 
   public get magnitude() {
     return Vector.magnitude(this);
   }
 
-  public set magnitude(magnitude: number) {
+  public setMagnitude(magnitude: number) {
     const angle = this.angle;
     this._x = Vector.x(angle, magnitude);
     this._y = Vector.y(angle, magnitude);
+
+    return this;
+  }
+
+  public set magnitude(magnitude: number) {
+    this.setMagnitude(magnitude);
   }
 
   constructor(xOrAngle: number, yOrMagnitude: number, polar?: boolean) {
