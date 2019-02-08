@@ -1,16 +1,25 @@
 {
   "name": "v-for-vector",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "author": "Alex Lunyov <isuntc@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^24.0.0",
     "jest": "23",
+    "size-limit": "^0.21.1",
     "ts-jest": "^23.10.5",
     "typescript": "^3.3.3"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
+    "prebuild": "rm -rf dist && mkdir dist",
+    "build": "yarn prebuild && tsc && yarn size",
+    "prepublish": "yarn build",
+    "size": "size-limit",
     "test": "jest",
     "test:watch": "jest --watch"
   }
