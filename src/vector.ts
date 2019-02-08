@@ -1,15 +1,11 @@
 export class Vector {
-  private _x: number | undefined;
-  private _y: number | undefined;
-  private _angle: number | undefined;
-  private _magnitude: number | undefined;
+  private _x: number;
+  private _y: number;
 
   static clone(v: Vector) {
     const clone = new Vector(0, 0);
     clone._x = v._x;
     clone._y = v._y;
-    clone._angle = v._angle;
-    clone._magnitude = v._magnitude;
     return clone;
   }
 
@@ -46,8 +42,8 @@ export class Vector {
   }
 
   public add(v: Vector) {
-    this.x += v.x;
-    this.y += v.y;
+    this.x = this.x + v.x;
+    this.y = this.y + v.y;
     return this;
   }
 
@@ -90,15 +86,13 @@ export class Vector {
     return this;
   }
 
-  public clone(v: Vector) {
-    return Vector.clone(v);
+  public clone() {
+    return Vector.clone(this);
   }
 
   public copyFrom(v: Vector) {
     this._x = v._x;
     this._y = v._y;
-    this._angle = v._angle;
-    this._magnitude = v._magnitude;
 
     return this;
   }
@@ -116,75 +110,45 @@ export class Vector {
   }
 
   public get x() {
-    if (
-      this._x === undefined &&
-      this._magnitude !== undefined &&
-      this._angle !== undefined
-    ) {
-      this._x = Vector.x(this._angle, this._magnitude);
-    }
-    return this._x as number;
+    return this._x;
   }
 
   public set x(x: number) {
     this._x = x;
-    this.resetPolar();
   }
 
   public get y() {
-    if (
-      this._y === undefined &&
-      this._magnitude !== undefined &&
-      this._angle !== undefined
-    ) {
-      this._y = Vector.y(this._angle, this._magnitude);
-    }
-    return this._y as number;
+    return this._y;
   }
 
   public set y(y: number) {
     this._y = y;
-    this.resetPolar();
   }
 
   public get angle() {
-    if (this._angle === undefined) {
-      this._angle = Vector.angle(this);
-    }
-    return this._angle as number;
+    return Vector.angle(this);
   }
 
   public set angle(angle: number) {
-    this._angle = angle;
-    this.resetCartesian();
+    const magnitude = this.magnitude;
+    this._x = Vector.x(angle, magnitude);
+    this._y = Vector.y(angle, magnitude);
   }
 
   public get magnitude() {
-    if (this._magnitude === undefined) {
-      this._magnitude = Vector.magnitude(this);
-    }
-    return this._magnitude as number;
+    return Vector.magnitude(this);
   }
 
   public set magnitude(magnitude: number) {
-    this._magnitude = magnitude;
-    this.resetCartesian();
-  }
-
-  private resetCartesian() {
-    this._x = undefined;
-    this._y = undefined;
-  }
-
-  private resetPolar() {
-    this._angle = undefined;
-    this._magnitude = undefined;
+    const angle = this.angle;
+    this._x = Vector.x(angle, magnitude);
+    this._y = Vector.y(angle, magnitude);
   }
 
   constructor(xOrAngle: number, yOrMagnitude: number, polar?: boolean) {
     if (polar) {
-      this._angle = xOrAngle;
-      this._magnitude = yOrMagnitude;
+      this._x = Vector.x(xOrAngle, yOrMagnitude);
+      this._y = Vector.y(xOrAngle, yOrMagnitude);
     } else {
       this._x = xOrAngle;
       this._y = yOrMagnitude;

@@ -74,6 +74,12 @@ describe('algebra', () => {
     expect(v2.x).toBe(10);
     expect(v2.y).toBe(10);
   });
+  test('add', () => {
+    const v1 = Vector.polar(Math.PI, 65);
+    const v2 = v1.add(Vector.cartesian(300, 300));
+    expect(v2.x).toBe(235);
+    expect(v2.y).toBe(300);
+  });
   test('addS', () => {
     const v1 = Vector.cartesian(0, 10);
     const v2 = v1.addS(100);
