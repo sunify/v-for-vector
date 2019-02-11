@@ -17,14 +17,6 @@ export class Vector {
     return new Vector(angle, magnitude, true);
   }
 
-  static magnitude(v: Vector) {
-    return Vector.dist(v, origin);
-  }
-
-  static angle(v: Vector) {
-    return Math.atan2(v.y, v.x);
-  }
-
   static dist(v1: Vector, v2: Vector) {
     return Math.hypot(v1.x - v2.x, v1.y - v2.y);
   }
@@ -137,7 +129,7 @@ export class Vector {
   }
 
   public get angle() {
-    return Vector.angle(this);
+    return Math.atan2(this.y, this.x);
   }
 
   public setAngle(angle: number) {
@@ -153,7 +145,7 @@ export class Vector {
   }
 
   public get magnitude() {
-    return Vector.magnitude(this);
+    return Vector.dist(this, origin);
   }
 
   public setMagnitude(magnitude: number) {

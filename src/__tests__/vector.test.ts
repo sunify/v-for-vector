@@ -21,18 +21,6 @@ describe('construction', () => {
 });
 
 describe('statics', () => {
-  test('magnitude', () => {
-    const v1 = Vector.cartesian(0, 100);
-    expect(Vector.magnitude(v1)).toBe(100);
-  });
-
-  test('angle', () => {
-    const v1 = Vector.cartesian(0, 100);
-    expect(Vector.angle(v1)).toBe(radians(90));
-    const v2 = Vector.cartesian(100, 100);
-    expect(Vector.angle(v2)).toBe(radians(45));
-  });
-
   test('dist', () => {
     const v1 = Vector.cartesian(10, 10);
     const v2 = Vector.cartesian(100, 10);
