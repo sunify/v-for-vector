@@ -45,15 +45,15 @@ export class Vector {
     return Vector.cartesian(0, 0);
   }
 
-  public add(v: Vector) {
-    this.x = this.x + v.x;
-    this.y = this.y + v.y;
-    return this;
-  }
+  public add(b: Vector | number) {
+    if (b instanceof Vector) {
+      this.x += b.x;
+      this.y += b.y;
+    } else {
+      this.x += b;
+      this.y += b;
+    }
 
-  public addS(n: number) {
-    this.x += n;
-    this.y += n;
     return this;
   }
 
@@ -64,12 +64,14 @@ export class Vector {
     return this;
   }
 
-  public sub(v: Vector) {
-    return this.add(Vector.clone(v).mult(-1));
-  }
+  public sub(b: Vector | number) {
+    if (b instanceof Vector) {
+      this.add(Vector.clone(b).mult(-1));
+    } else {
+      this.add(-b);
+    }
 
-  public subS(n: number) {
-    return this.addS(-n);
+    return this;
   }
 
   public div(n: number) {

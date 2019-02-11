@@ -80,9 +80,9 @@ describe('algebra', () => {
     expect(v2.x).toBe(235);
     expect(v2.y).toBe(300);
   });
-  test('addS', () => {
+  test('add scalar', () => {
     const v1 = Vector.cartesian(0, 10);
-    const v2 = v1.addS(100);
+    const v2 = v1.add(100);
     expect(v2.x).toBe(100);
     expect(v2.y).toBe(110);
   });
@@ -100,9 +100,9 @@ describe('algebra', () => {
     expect(v2.x).toBe(-10);
     expect(v2.y).toBe(10);
   });
-  test('subS', () => {
+  test('sub scalar', () => {
     const v1 = Vector.cartesian(0, 10);
-    const v2 = v1.subS(100);
+    const v2 = v1.sub(100);
     expect(v2.x).toBe(-100);
     expect(v2.y).toBe(-90);
   });
