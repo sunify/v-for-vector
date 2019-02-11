@@ -88,14 +88,8 @@ describe('algebra', () => {
   });
 
   test('mult', () => {
-    const v1 = Vector.cartesian(5, 10);
-    const v2 = v1.mult(Vector.cartesian(10, 4));
-    expect(v2.x).toBe(50);
-    expect(v2.y).toBe(40);
-  });
-  test('multS', () => {
     const v1 = Vector.cartesian(0, 10);
-    const v2 = v1.multS(100);
+    const v2 = v1.mult(100);
     expect(v2.x).toBe(0);
     expect(v2.y).toBe(1000);
   });
@@ -114,14 +108,8 @@ describe('algebra', () => {
   });
 
   test('div', () => {
-    const v1 = Vector.cartesian(4, 10);
-    const v2 = v1.div(Vector.cartesian(2, 5));
-    expect(v2.x).toBe(2);
-    expect(v2.y).toBe(2);
-  });
-  test('divS', () => {
     const v1 = Vector.cartesian(0, 10);
-    const v2 = v1.divS(100);
+    const v2 = v1.div(100);
     expect(v2.x).toBe(0);
     expect(v2.y).toBe(0.1);
   });

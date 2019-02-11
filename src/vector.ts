@@ -57,13 +57,7 @@ export class Vector {
     return this;
   }
 
-  public mult(v: Vector) {
-    this.x *= v.x;
-    this.y *= v.y;
-    return this;
-  }
-
-  public multS(n: number) {
+  public mult(n: number) {
     this.x *= n;
     this.y *= n;
 
@@ -71,20 +65,14 @@ export class Vector {
   }
 
   public sub(v: Vector) {
-    return this.add(Vector.clone(v).multS(-1));
+    return this.add(Vector.clone(v).mult(-1));
   }
 
   public subS(n: number) {
     return this.addS(-n);
   }
 
-  public div(v: Vector) {
-    this.x /= v.x;
-    this.y /= v.y;
-    return this;
-  }
-
-  public divS(n: number) {
+  public div(n: number) {
     this.x /= n;
     this.y /= n;
     return this;
@@ -107,7 +95,7 @@ export class Vector {
 
   public normalize() {
     if (this.magnitude > 0) {
-      this.divS(this.magnitude);
+      this.div(this.magnitude);
     }
 
     return this;
